@@ -20,10 +20,17 @@ do{
         case 1: PrintCatalog(names, prices);  break;
         case 2:
             Console.Write("Введите текст для поиска: ");
-            string query = Console.ReadLine() ?? "";
+            string query = Console.ReadLine();
             Find(names, query);
             break;
-        case 3: Console.WriteLine(""); break;
+        case 3:
+            Console.WriteLine($"Минимальная цена: {MinPrice(prices)}");
+            Console.WriteLine($"Максимальная цена: {MaxPrice(prices)}");
+            Console.WriteLine($"Средняя цена: {AveragePrice(prices):F0}");
+
+            int maxIndex = IndexOfMax(prices);
+            Console.WriteLine($"Самый дорогой товар: {names[maxIndex]}");
+            break;
         case 4: Console.WriteLine(""); break;
         case 0: Console.WriteLine(""); break;
         default: Console.WriteLine("Нет такого"); break;
@@ -54,4 +61,39 @@ static void Find(string[] names, string query){
     if (!found){
         Console.WriteLine("Ничего не найдено");
     }
+}
+
+
+static int MinPrice(int[] prices){
+    int min = prices[0];
+    foreach (int price in prices){
+        if (price < min) min = price;
+    }
+    return min;
+}
+
+static int MaxPrice(int[] prices){
+    int max = prices[0];
+    foreach (int price in prices){
+        if (price > max) max = price;
+    }
+    return max;
+}
+
+static double AveragePrice(int[] prices){
+    double sum = 0;
+    foreach (int price in prices){
+        sum += price;
+    }
+    return sum / prices.Length;
+}
+
+static int IndexOfMax(int[] prices){
+    int maxIndex = 0;
+    for (int i = 1; i < prices.Length; i++){
+        if (prices[i] > prices[maxIndex]){
+            maxIndex = i;
+        }
+    }
+    return maxIndex;
 }
