@@ -11,6 +11,7 @@ do{
     Console.WriteLine("4 - скидка");
     Console.WriteLine("5 – товары дешевле заданной цены");
     Console.WriteLine("6 – поиск по первой букве");
+    Console.WriteLine("7 – отсортировать по цене");
     Console.WriteLine("0 - выход");
     Console.WriteLine("ваш выбор :");
 
@@ -64,6 +65,11 @@ do{
             else{
                 Console.WriteLine("Вы ничего не ввели.");
             }
+            break;
+        case 7:
+            SortByPrice(names, prices);
+            Console.WriteLine("Каталог успешно отсортирован по возрастанию цены!");
+            PrintCatalog(names, prices); 
             break;
         case 0: Console.WriteLine(""); break;
         default: Console.WriteLine("Нет такого"); break;
@@ -157,3 +163,17 @@ static void FindByFirstLetter(string[] names, char letter){
     }
 }
 
+static void SortByPrice(string[] names, int[] prices){
+    for (int i = 0; i < prices.Length - 1; i++){
+        for (int j = 0; j < prices.Length - 1 - i; j++){
+            if (prices[j] > prices[j + 1]){
+                int tempPrice = prices[j];
+                prices[j] = prices[j + 1];
+                prices[j + 1] = tempPrice;
+                string tempName = names[j];
+                names[j] = names[j + 1];
+                names[j + 1] = tempName;
+            }
+        }
+    }
+}
