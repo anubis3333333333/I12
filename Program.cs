@@ -18,7 +18,11 @@ do{
 
     switch (choice){
         case 1: PrintCatalog(names, prices);  break;
-        case 2: Console.WriteLine(""); break;
+        case 2:
+            Console.Write("Введите текст для поиска: ");
+            string query = Console.ReadLine() ?? "";
+            Find(names, query);
+            break;
         case 3: Console.WriteLine(""); break;
         case 4: Console.WriteLine(""); break;
         case 0: Console.WriteLine(""); break;
@@ -31,5 +35,23 @@ while (choice != 0);
 static void PrintCatalog(string[] names, int[] prices){
     for (int i = 0; i < names.Length; i++){
         Console.WriteLine($"{i + 1}. {names[i]} — {prices[i]}");
+    }
+}
+
+
+
+static void Find(string[] names, string query){
+    bool found = false;
+    string lowerQuery = query.ToLower();
+
+    for (int i = 0; i < names.Length; i++){
+        if (names[i].ToLower().Contains(lowerQuery)){
+            Console.WriteLine($"{names[i]}");
+            found = true;
+        }
+    }
+
+    if (!found){
+        Console.WriteLine("Ничего не найдено");
     }
 }
