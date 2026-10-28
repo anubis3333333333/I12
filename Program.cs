@@ -9,6 +9,8 @@ do{
     Console.WriteLine("2 - найти товар");
     Console.WriteLine("3 - статистика цен");
     Console.WriteLine("4 - скидка");
+    Console.WriteLine("5 – товары дешевле заданной цены");
+    Console.WriteLine("6 – поиск по первой букве");
     Console.WriteLine("0 - выход");
     Console.WriteLine("ваш выбор :");
 
@@ -44,6 +46,24 @@ do{
             }
             Console.WriteLine("Цены со скидкой:");
             PrintCatalog(names, prices);
+            break;
+        case 5:
+            int maxPrice;
+            Console.Write("Введите максимальную цену: ");
+            while (!int.TryParse(Console.ReadLine(), out maxPrice) || maxPrice < 0){
+                Console.Write("Некорректный ввод. Введите цену еще раз: ");
+            }
+            ShowCheaperThan(names, prices, maxPrice);
+            break;
+        case 6:
+            Console.Write("Введите первую букву для поиска: ");
+            string letterInput = Console.ReadLine();
+            if (letterInput.Length > 0){
+                FindByFirstLetter(names, letterInput[0]);
+            }
+            else{
+                Console.WriteLine("Вы ничего не ввели.");
+            }
             break;
         case 0: Console.WriteLine(""); break;
         default: Console.WriteLine("Нет такого"); break;
@@ -109,5 +129,31 @@ static int IndexOfMax(int[] prices){
         }
     }
     return maxIndex;
+}
+
+static void ShowCheaperThan(string[] names, int[] prices, int maxPrice){
+    int count = 0;
+    for (int i = 0; i < names.Length; i++){
+        if (prices[i] < maxPrice){
+            Console.WriteLine($"{names[i]} — {prices[i]}");
+            count++;
+        }
+    }
+    Console.WriteLine($"Всего товаров дешевле {maxPrice}: {count}");
+}
+
+static void FindByFirstLetter(string[] names, char letter){
+    bool found = false;
+    char lowerLetter = char.ToLower(letter);
+    foreach (string name in names){
+        if (name.Length > 0 && char.ToLower(name[0]) == lowerLetter){
+            Console.WriteLine(name);
+            found = true;
+        }
+    }
+
+    if (!found){
+        Console.WriteLine("Ничего не найдено");
+    }
 }
 
