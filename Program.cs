@@ -31,7 +31,20 @@ do{
             int maxIndex = IndexOfMax(prices);
             Console.WriteLine($"Самый дорогой товар: {names[maxIndex]}");
             break;
-        case 4: Console.WriteLine(""); break;
+        case 4:
+            int percent;
+            do{
+                Console.Write("Введите процент скидки (от 1 до 50): ");
+            } 
+            while (!int.TryParse(Console.ReadLine(), out percent) || percent < 1 || percent > 50);
+            for (int i = 0; i < prices.Length; i++){
+                if (prices[i] > 10000){
+                    prices[i] = prices[i] * (100 - percent) / 100;
+                }
+            }
+            Console.WriteLine("Цены со скидкой:");
+            PrintCatalog(names, prices);
+            break;
         case 0: Console.WriteLine(""); break;
         default: Console.WriteLine("Нет такого"); break;
 
@@ -97,3 +110,4 @@ static int IndexOfMax(int[] prices){
     }
     return maxIndex;
 }
+
